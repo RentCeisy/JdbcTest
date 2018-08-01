@@ -14,12 +14,12 @@ public class JdbcTest {
     public static void main(String[] args) {
         TestHelper testHelper = new TestHelper();
 
-//        List<Client> clients = testHelper.getClientList();
-//
-//        for (Client c : clients) {
-//            System.out.println(c.getId() + " " + c.getName() + " " + c.getSurname() + " " + c.getAge());
-//        }
-//        Client c = testHelper.getClientById(4);
+        List<Client> clients = testHelper.getClientList1();
+
+        for (Client c : clients) {
+            System.out.println(c.getId() + " " + c.getName() + " " + c.getSurname() + " " + c.getAge());
+        }
+//        Client c = testHelper.getClientById(3);
 //        System.out.println(c.getId() + " " + c.getName() + " " + c.getSurname() + " " + c.getAge());
 
 //        Client client = new Client();

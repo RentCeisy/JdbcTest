@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 import java.util.List;
 
 public class TestHelper {
@@ -23,6 +24,34 @@ public class TestHelper {
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Client.class);
         Root<Client> root = criteriaQuery.from(Client.class);
         criteriaQuery.select(root);
+        Query query = session.createQuery(criteriaQuery);
+        List<Client> clients = query.getResultList();
+        session.close();
+        return clients;
+    }
+
+    public List<Client> getClientList1() {
+        Session session = sessionFactory.openSession();
+
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+        Selection[] selections = {root.get("id"), root.get("name")};
+        criteriaQuery.select(criteriaBuilder.construct(Client.class, selections));
+        Query query = session.createQuery(criteriaQuery);
+        List<Client> clients = query.getResultList();
+        session.close();
+        return clients;
+    }
+
+    public List<Client> getClientList2() {
+        Session session = sessionFactory.openSession();
+
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+        Selection[] selections = {root.get("id"), root.get("name")};
+        criteriaQuery.select(criteriaBuilder.construct(Client.class, selections)).where(criteriaBuilder.equal(root.<String>get("name"), "Mila"));
         Query query = session.createQuery(criteriaQuery);
         List<Client> clients = query.getResultList();
         session.close();
